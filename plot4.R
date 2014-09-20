@@ -3,6 +3,9 @@ NEI <- readRDS("summarySCC_PM25.rds")
 SCC <- readRDS("Source_Classification_Code.rds")
 
 ## Find all the source names that have coal-combustion related sources.
+## I think just a grep on coal would be sufficient because coal only emits
+## PM2.5 when it is burnt(combustion). So any source that has coal word,
+## in my opinion, contributes to this case.
 SCC_coal_source = SCC[grepl("coal", SCC$Short.Name, ignore.case = TRUE),]
 
 ## merge the datasets by SCC - the source names. SO the result we get is a
@@ -11,7 +14,7 @@ NEI_coal_source = merge(NEI,SCC_coal_source, by="SCC")
 
 library(ggplot2)
 png("plot4.png")
-g <- ggplot(NEI_coal_source, aes(year, Emissions))
+g = ggplot(NEI_coal_source, aes(year, Emissions))
 g + geom_line(stat="summary", fun.y="sum", size=1.2, color="red") +
     geom_point(size=4, stat="summary", fun.y="sum", color="red", aes(value=Emissions)) +
     ylab(expression('Total PM'[2.5]*" Emissions in tons")) +

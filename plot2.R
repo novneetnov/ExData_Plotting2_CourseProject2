@@ -12,5 +12,5 @@ emissions_baltimore = aggregate(NEI_Baltimore$Emissions, by=list(NEI_Baltimore$y
 ## Make a barplot and save in a png file
 png("plot2.png")
 barplot(emissions_baltimore[,2], names.arg=emissions_baltimore[,1],  main='Total Emission in Baltimore City, MD', 
-        xlab='Year', ylab=expression(paste('Total PM'[2.5],' in tons')))
+        xlab='Year', ylab=expression('Total PM'[2.5]*" in tons"))
 dev.off()
